@@ -1,5 +1,5 @@
 const path = require('path');
-// for local environment PLEASE DO NOT FORGET TO CREATE .env FILE
+// PLEASE DO NOT FORGET TO CREATE .env FILE
 // Check .env.example to help you create it
 // eslint-disable-next-line global-require
 require('dotenv-safe').config({
@@ -12,7 +12,8 @@ const { env } = process;
 
 module.exports = {
   env: env.NODE_ENV,
-  port: env.PORT,
+  httpPort: env.HTTP_PORT,
+  webSocketPort: env.WEBSOCKET_PORT,
   host: env.HOST,
   logs: env.LOGS,
   redisHost: env.REDIS_HOST,
