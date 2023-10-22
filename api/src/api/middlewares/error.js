@@ -1,24 +1,30 @@
+/* eslint-disable no-unused-vars */
 const httpStatus = require('http-status');
+const { env } = require('../../config/vars');
 const APIError = require('../utils/APIError');
 
-const handler = (err, req, res) => {
+const handler = (err, req, res, next) => {
   const response = {
     http: {
-      statusCode: err.status,
-      statusCategory: 'ERROR',
+      status_code: err.status,
+      status_category: 'ERROR',
       url: req.url,
       method: req.method,
     },
+    name: err.name,
+    status: err.status,
     message: err.message || httpStatus[err.status],
     errors: err.errors,
     stack: err.stack,
   };
-  // eslint-disable-next-line no-console
-  console.error(response);
-  res.sendStatus(err.status);
+
+  if (env !== 'development' && env !== 'local' && env !== 'staging') {
+    delete response.stack;
+  }
+  res.status(err.status || 500).send(response);
 };
 
-const converter = (err, req, res) => {
+const converter = (err, req, res, next) => {
   let convertedError = err;
   if (!(err instanceof APIError)) {
     convertedError = new APIError({
@@ -30,10 +36,13 @@ const converter = (err, req, res) => {
   return handler(convertedError, req, res);
 };
 
-const notFound = (req, res) => {
+const notFound = (req, res, next) => {
+  const notFoundError = new Error(`Request path ${req.path} not found`);
   const err = new APIError({
     message: 'Not found',
     status: httpStatus.NOT_FOUND,
+    errors: notFoundError.message,
+    stack: notFoundError.stack,
   });
   return handler(err, req, res);
 };
