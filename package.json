@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "commander": "^11.1.0"
+    "commander": "^11.1.0",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "eslint": "^7.32.0 || ^8.2.0",
