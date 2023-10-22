@@ -14,4 +14,4 @@ node script_launch.js --instances N
 
 ##### to launch the stress test script use this command
 
-node script_stress_test.js --messages 50 --sockets 10 --count 2
+node script_stress_test.js --messages N --sockets M --count L
