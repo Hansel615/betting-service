@@ -1,6 +1,6 @@
 # betting-service
 
-### this a monorepo that contains the api and the worker
+### this a monorepo that contains the api and the worker bohboh
 
 #### do not forget to install the dependencies on the root in order to be able to run scripts
 
